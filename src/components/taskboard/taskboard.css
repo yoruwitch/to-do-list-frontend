@@ -1,0 +1,23 @@
+section {
+    background-color: var(--light-purple);
+}
+.taskboard_container {
+    margin: 0 20px 20px 20px;
+    border-radius: 20px;
+    background-color: var(--light-white);
+    padding: 20px;
+}
+
+.taskboard_title {
+    text-align: center;
+}
+.card_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-height: 400px;
+    overflow-y: auto; 
+    scrollbar-color: var(--dark-purple) var(--light-purple);
+    scrollbar-width: thin;
+}
+

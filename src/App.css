@@ -1,0 +1,13 @@
+:root{
+  --light-white: #f0f2ef;
+  --light-purple: #dec0f1;
+  --dark-purple: #330036
+}
+
+#root {
+  background-color: var(--light-purple);
+}
+body, html {
+  background-color: var(--light-purple);
+  font-family: "Poppins", serif !important;
+}
