@@ -50,7 +50,14 @@ function App() {
 
             <NotificationComponent />
             <ModalConfirmDelete />
-            {/* <ModalEditTask /> */}
+            {/*
+            <ModalEditTask
+                show={true}
+                task={tasks[0]}
+                onClose={() => {}}
+                onUpdateTask={(task) => console.log(task)}
+            />
+             */}
         </>
     );
 }
