@@ -6,19 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { TaskData } from "../../classes/TaskData";
 import { TaskService } from "../../service/TaskService";
+import { NotificationService } from "../../service/NotificationService";
 
 function FormComponent({
     formData,
     onUpdateTask,
-    onShowNotification,
 }: {
     formData?: TaskData;
     onUpdateTask: (task: TaskData) => void;
-    onShowNotification: (
-        isError: boolean,
-        title: string,
-        message: string
-    ) => void;
 }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -54,7 +49,7 @@ function FormComponent({
                     onUpdateTask(task);
 
                     // Configura a notificação de sucesso
-                    onShowNotification(
+                    NotificationService.show(
                         false,
                         "Success",
                         "Task created successfully!"
@@ -63,7 +58,11 @@ function FormComponent({
                 .catch((error) => {
                     console.error(error);
                     // Configura a notificação de erro
-                    onShowNotification(true, "Error", `Failed to create task. ${error}`);
+                    NotificationService.show(
+                        true,
+                        "Error",
+                        `Failed to create task. ${error}`
+                    );
                 });
         } else {
             TaskService.updateTask(
@@ -78,7 +77,7 @@ function FormComponent({
                     );
                     onUpdateTask(task);
 
-                    onShowNotification(
+                    NotificationService.show(
                         false,
                         "Success",
                         "Task updated successfully!"
@@ -86,7 +85,11 @@ function FormComponent({
                 })
                 .catch((error) => {
                     console.error(error);
-                    onShowNotification(true, "Error", `Failed to update task. ${error}`);
+                    NotificationService.show(
+                        true,
+                        "Error",
+                        `Failed to update task. ${error}`
+                    );
                 });
         }
     };

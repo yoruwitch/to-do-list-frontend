@@ -1,25 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
+import { NotificationService } from "../../service/NotificationService";
 
-function NotificationComponent({
-    isError,
-    title,
-    message,
-    show,
-    onClose,
-}: {
-    isError: boolean;
-    title: string;
-    message: string;
-    show: boolean;
-    onClose: () => void;
-}) {
+function NotificationComponent() {
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState("");
+    const [title, setTitle] = useState("");
+    const [isError, setIsError] = useState(false);
+
     useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, 3000);
-        return () => clearTimeout(timer);
-    }, [onClose]);
+        const handleNotification = (err: boolean, ttl: string, msg: string) => {
+            setMessage(msg);
+            setTitle(ttl);
+            setIsError(err);
+            setShow(true);
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => setShow(false), 3000);
+        };
+
+        NotificationService.subscribe(handleNotification);
+        return () => NotificationService.unsubscribe(handleNotification);
+    }, []);
 
     return (
         <ToastContainer
@@ -28,7 +30,7 @@ function NotificationComponent({
             style={{ zIndex: 1 }}
         >
             <Toast
-                onClose={() => onClose()}
+                onClose={() => setShow(false)}
                 show={show}
                 bg={isError ? "danger" : "success"}
             >

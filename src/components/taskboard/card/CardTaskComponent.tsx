@@ -4,29 +4,24 @@ import { Button, Card } from "react-bootstrap";
 import "./card.css";
 import { TaskData } from "../../../classes/TaskData";
 import { TaskService } from "../../../service/TaskService";
+import { NotificationService } from "../../../service/NotificationService";
+import { ConfirmModalService } from "../../../service/ConfirmModalService";
 
 function CardTaskComponent({
     task,
     onDeleteTask,
-    onShowNotification,
 }: {
     task: TaskData;
     onDeleteTask: (taskId: string) => void;
-    onShowNotification: (
-        isError: boolean,
-        title: string,
-        message: string
-    ) => void;
 }) {
     const confirmDelete = () => {
-        // TODO: Modal de confirmação
-        deleteTask();
+        ConfirmModalService.show(task, deleteTask);
     };
 
     const deleteTask = () => {
         TaskService.deleteTask(task.id)
             .then(() => {
-                onShowNotification(
+                NotificationService.show(
                     false,
                     "Success",
                     "The task was deleted successfully!"
@@ -34,7 +29,7 @@ function CardTaskComponent({
                 onDeleteTask(task.id);
             })
             .catch((error) => {
-                onShowNotification(
+                NotificationService.show(
                     true,
                     "Error",
                     `Failed to delete task. ${error}`

@@ -6,15 +6,9 @@ import { TaskData } from "../../classes/TaskData";
 function TaskBoardComponent({
     tasks,
     onDeleteTask,
-    onShowNotification,
 }: {
     tasks: TaskData[];
     onDeleteTask: (taskId: string) => void;
-    onShowNotification: (
-        isError: boolean,
-        title: string,
-        message: string
-    ) => void;
 }) {
     return (
         <>
@@ -28,7 +22,6 @@ function TaskBoardComponent({
                                     key={task.id}
                                     task={task}
                                     onDeleteTask={onDeleteTask}
-                                    onShowNotification={onShowNotification}
                                 />
                             ))
                         ) : (
