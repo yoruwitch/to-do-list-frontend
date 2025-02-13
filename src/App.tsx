@@ -7,8 +7,8 @@ function App() {
     return (
         <>
             <NavbarComponent />
-            <FormComponent/>
-            <TaskBoardComponent/>
+            <FormComponent />
+            <TaskBoardComponent />
         </>
     );
 }
