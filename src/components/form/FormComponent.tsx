@@ -7,7 +7,13 @@ import { useEffect, useState, SyntheticEvent } from "react";
 import { TaskData } from "../../classes/TaskData";
 import { TaskService } from "../../service/TaskService";
 
-function FormComponent({ formData }: { formData?: TaskData }) {
+function FormComponent({
+    formData,
+    onUpdateTask,
+}: {
+    formData?: TaskData;
+    onUpdateTask: (task: TaskData) => void;
+}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -20,13 +26,12 @@ function FormComponent({ formData }: { formData?: TaskData }) {
             setTitle(formData.title);
             setDescription(formData.description);
         }
-    });
+    }, [formData]);
 
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            // event.preventDefault();
             event.stopPropagation();
         } else {
             sendData();
@@ -37,9 +42,35 @@ function FormComponent({ formData }: { formData?: TaskData }) {
 
     const sendData = () => {
         if (!formData) {
-            TaskService.createTask(new TaskData("", title, description));
+            TaskService.createTask(new TaskData("", title, description))
+                .then((res) => {
+                    const task = new TaskData(
+                        res.id,
+                        res.title,
+                        res.description
+                    );
+                    onUpdateTask(task);
+                })
+                .catch((error) => {
+                    // criar mensagem de erro
+                    console.error(error);
+                });
         } else {
-            // TaskService.createTask(formData.id, new TaskData("", title, description));
+            TaskService.updateTask(
+                formData.id,
+                new TaskData(formData.id, title, description)
+            )
+                .then(({ res }) => {
+                    const task = new TaskData(
+                        res.task.id,
+                        res.task.title,
+                        res.task.description
+                    );
+                    onUpdateTask(task);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
     };
 

@@ -3,8 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card } from "react-bootstrap";
 import "./card.css";
 import { TaskData } from "../../../classes/TaskData";
+import { TaskService } from "../../../service/TaskService";
 
-function CardTaskComponent({ task }: { task: TaskData }) {
+function CardTaskComponent({ task, onDeleteTask }: { task: TaskData, onDeleteTask: (taskId: string) => void }) {
+    const confirmDelete = () => {
+        deleteTask();
+    };
+
+    const deleteTask = () => {
+        TaskService.deleteTask(task.id).then(() => {
+            // mandar 
+            onDeleteTask(task.id);
+        });
+    };
+
     return (
         <>
             <Card style={{ width: "10rem" }} className="card_item">
@@ -15,7 +27,10 @@ function CardTaskComponent({ task }: { task: TaskData }) {
                         <Button variant="success">
                             <FontAwesomeIcon icon={faPenToSquare} />
                         </Button>
-                        <Button variant="danger">
+                        <Button
+                            variant="danger"
+                            onClick={() => confirmDelete()}
+                        >
                             <FontAwesomeIcon icon={faTrashCan} />
                         </Button>
                     </div>
