@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { useEffect, useState, SyntheticEvent } from "react";
 import { TaskData } from "../../classes/TaskData";
+import { TaskService } from "../../service/TaskService";
 
-function FormComponent({ formData }: {formData?: TaskData}) {
+function FormComponent({ formData }: { formData?: TaskData }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -16,15 +17,16 @@ function FormComponent({ formData }: {formData?: TaskData}) {
         if (!formData) {
             return;
         } else {
-            setTitle(formData.title)
+            setTitle(formData.title);
             setDescription(formData.description);
         }
     });
 
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
+            // event.preventDefault();
             event.stopPropagation();
         } else {
             sendData();
@@ -34,7 +36,11 @@ function FormComponent({ formData }: {formData?: TaskData}) {
     };
 
     const sendData = () => {
-        console.log("oi", title, description);
+        if (!formData) {
+            TaskService.createTask(new TaskData("", title, description));
+        } else {
+            // TaskService.createTask(formData.id, new TaskData("", title, description));
+        }
     };
 
     return (
