@@ -1,6 +1,6 @@
 import { TaskData } from "../classes/TaskData";
 
-export class ConfirmModalService {
+class ConfirmModalService {
     private static listeners: ((
         taskData: TaskData,
         onConfirm: () => void
@@ -23,4 +23,4 @@ export class ConfirmModalService {
     }
 }
 
-// export ConfirmModalService;
+export default ConfirmModalService;

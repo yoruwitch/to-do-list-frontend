@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { ConfirmModalService } from "../../../service/ConfirmModalService";
+import ConfirmModalService from "../../../service/ConfirmModalService";
 import { TaskData } from "../../../classes/TaskData";
 
 function ModalConfirmDelete() {
