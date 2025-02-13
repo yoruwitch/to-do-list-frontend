@@ -1,28 +1,31 @@
+import { useEffect, useState, SyntheticEvent } from "react";
 import "./form.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import { useEffect, useState, SyntheticEvent } from "react";
 import { TaskData } from "../../classes/TaskData";
 import { TaskService } from "../../service/TaskService";
 
 function FormComponent({
     formData,
     onUpdateTask,
+    onShowNotification,
 }: {
     formData?: TaskData;
     onUpdateTask: (task: TaskData) => void;
+    onShowNotification: (
+        isError: boolean,
+        title: string,
+        message: string
+    ) => void;
 }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        if (!formData) {
-            return;
-        } else {
+        if (formData) {
             setTitle(formData.title);
             setDescription(formData.description);
         }
@@ -36,7 +39,6 @@ function FormComponent({
         } else {
             sendData();
         }
-
         setValidated(true);
     };
 
@@ -50,10 +52,18 @@ function FormComponent({
                         res.description
                     );
                     onUpdateTask(task);
+
+                    // Configura a notificação de sucesso
+                    onShowNotification(
+                        false,
+                        "Success",
+                        "Task created successfully!"
+                    );
                 })
                 .catch((error) => {
-                    // criar mensagem de erro
                     console.error(error);
+                    // Configura a notificação de erro
+                    onShowNotification(true, "Error", `Failed to create task. ${error}`);
                 });
         } else {
             TaskService.updateTask(
@@ -67,9 +77,16 @@ function FormComponent({
                         res.task.description
                     );
                     onUpdateTask(task);
+
+                    onShowNotification(
+                        false,
+                        "Success",
+                        "Task updated successfully!"
+                    );
                 })
                 .catch((error) => {
                     console.error(error);
+                    onShowNotification(true, "Error", `Failed to update task. ${error}`);
                 });
         }
     };

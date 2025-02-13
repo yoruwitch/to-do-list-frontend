@@ -14,13 +14,16 @@ export class TaskService {
                 headers: { "Content-type": "application/json;charset=UTF-8" },
                 body: JSON.stringify(data),
             });
+
             if (!res.ok) {
-                throw new Error("Request failed");
+                const errorData = await res.json();
+                throw new Error(errorData.message);
             }
 
             return await res.json();
         } catch (error) {
             console.error(error);
+            throw error;
         }
     }
 
@@ -28,11 +31,15 @@ export class TaskService {
         try {
             const res = await fetch(this.url);
             if (!res.ok) {
-                throw new Error("Request failed");
+
+                const errorData = await res.json();
+
+                throw new Error(errorData.message);
             }
             return await res.json();
         } catch (error) {
             console.error(error);
+            throw error;
         }
     }
 
@@ -48,12 +55,16 @@ export class TaskService {
             });
 
             if (!res.ok) {
-                throw new Error("Request failed");
+
+                const errorData = await res.json();
+
+                throw new Error(errorData.message);
             }
 
             return await res.json();
         } catch (error) {
             console.error(error);
+            throw error;
         }
     }
 
@@ -64,12 +75,17 @@ export class TaskService {
             });
 
             if (!res.ok) {
-                throw new Error("Request failed");
+
+                const errorData = await res.json();
+
+                throw new Error(errorData.message);
             }
 
             return await res.json();
         } catch (error) {
             console.error(error);
+            throw error;
+
         }
     }
 }

@@ -5,16 +5,41 @@ import "./card.css";
 import { TaskData } from "../../../classes/TaskData";
 import { TaskService } from "../../../service/TaskService";
 
-function CardTaskComponent({ task, onDeleteTask }: { task: TaskData, onDeleteTask: (taskId: string) => void }) {
+function CardTaskComponent({
+    task,
+    onDeleteTask,
+    onShowNotification,
+}: {
+    task: TaskData;
+    onDeleteTask: (taskId: string) => void;
+    onShowNotification: (
+        isError: boolean,
+        title: string,
+        message: string
+    ) => void;
+}) {
     const confirmDelete = () => {
+        // TODO: Modal de confirmação
         deleteTask();
     };
 
     const deleteTask = () => {
-        TaskService.deleteTask(task.id).then(() => {
-            // mandar 
-            onDeleteTask(task.id);
-        });
+        TaskService.deleteTask(task.id)
+            .then(() => {
+                onShowNotification(
+                    false,
+                    "Success",
+                    "The task was deleted successfully!"
+                );
+                onDeleteTask(task.id);
+            })
+            .catch((error) => {
+                onShowNotification(
+                    true,
+                    "Error",
+                    `Failed to delete task. ${error}`
+                );
+            });
     };
 
     return (

@@ -5,9 +5,15 @@ import NavbarComponent from "./components/navbar/NavbarComponent";
 import TaskBoardComponent from "./components/taskboard/TaskBoardComponent";
 import { useEffect, useState } from "react";
 import { TaskService } from "./service/TaskService";
+import NotificationComponent from "./components/notification/NotificationComponent";
 
 function App() {
     const [tasks, setTasks] = useState<TaskData[]>([]);
+    const [showNotification, setShowNotification] = useState<boolean>(false);
+    const [messageNotification, setMessageNotification] = useState<string>("");
+    const [titleNotification, setTitleNotification] = useState<string>("");
+    const [isErrorNotification, setIsErrorNotification] =
+        useState<boolean>(false);
 
     useEffect(() => {
         TaskService.getTasks().then((res) => {
@@ -16,7 +22,6 @@ function App() {
     }, []);
 
     const handleUpdateTask = (updatedTask: TaskData) => {
-        console.log(updatedTask);
 
         setTasks((prevList) => {
             const taskExists = prevList.some(
@@ -39,13 +44,31 @@ function App() {
 
     const handleDeleteTask = (taskId: string) => {
         setTasks((prevList) => prevList.filter((task) => task.id !== taskId));
-    }
+    };
+
+    const onShowNotification = (
+        isError: boolean,
+        title: string,
+        message: string
+    ) => {
+        setIsErrorNotification(isError);
+        setTitleNotification(title);
+        setMessageNotification(message);
+        setShowNotification(true);
+    };
 
     return (
         <>
             <NavbarComponent />
-            <FormComponent onUpdateTask={handleUpdateTask} />
-            <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} />
+            <FormComponent onUpdateTask={handleUpdateTask} onShowNotification={onShowNotification} />
+            <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} onShowNotification={onShowNotification} />
+            <NotificationComponent
+                show={showNotification}
+                isError={isErrorNotification}
+                title={titleNotification}
+                message={messageNotification}
+                onClose={() => setShowNotification(false)}
+            />
         </>
     );
 }
