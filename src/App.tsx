@@ -8,6 +8,7 @@ import TaskService from "./services/TaskService";
 import NotificationComponent from "./components/notification/NotificationComponent";
 import ModalConfirmDeleteComponent from "./components/modals/modalConfirmDelete/odalConfirmDeleteComponent";
 import ModalEditTaskComponent from "./components/modals/modalEditTask/ModalEditTaskComponent";
+import Footer from "./components/footer/FooterComponent";
 
 function App() {
     const [tasks, setTasks] = useState<TaskData[]>([]);
@@ -47,11 +48,13 @@ function App() {
             <NavbarComponent />
             <FormComponent onUpdateTaskList={handleUpdateTasks} />
             <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} />
+            <Footer/>
 
             <NotificationComponent />
             <ModalConfirmDeleteComponent />
 
             <ModalEditTaskComponent onUpdateTaskList={handleUpdateTasks} />
+
         </>
     );
 }

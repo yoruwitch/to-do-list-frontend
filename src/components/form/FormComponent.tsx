@@ -53,6 +53,8 @@ function FormComponent({
                         res.title,
                         res.description
                     );
+
+                    clearForm();
                     setIsLoading(false);
                     onUpdateTaskList(task);
 
@@ -83,7 +85,7 @@ function FormComponent({
                         res.task.title,
                         res.task.description
                     );
-
+                    clearForm();
                     setIsLoading(false);
                     onUpdateTaskList(task);
 
@@ -104,12 +106,17 @@ function FormComponent({
         }
     };
 
+    const clearForm = () => {
+        setTitle("");
+        setDescription("");
+    }
+
     return (
         <>
             <section>
                 <div className="form_container">
                     <Form
-                        className="w-60"
+                        className="form_container_item"
                         noValidate
                         validated={validated}
                         onSubmit={handleSubmit}
