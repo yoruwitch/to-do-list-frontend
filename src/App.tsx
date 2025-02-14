@@ -4,10 +4,10 @@ import FormComponent from "./components/form/FormComponent";
 import NavbarComponent from "./components/navbar/NavbarComponent";
 import TaskBoardComponent from "./components/taskboard/TaskBoardComponent";
 import { useEffect, useState } from "react";
-import { TaskService } from "./service/TaskService";
+import TaskService from "./services/TaskService";
 import NotificationComponent from "./components/notification/NotificationComponent";
 import ModalConfirmDeleteComponent from "./components/modals/modalConfirmDelete/odalConfirmDeleteComponent";
-// import ModalEditTaskComponent from "./components/modals/modalEditTask/ModalEditTaskComponent";
+import ModalEditTaskComponent from "./components/modals/modalEditTask/ModalEditTaskComponent";
 
 function App() {
     const [tasks, setTasks] = useState<TaskData[]>([]);
@@ -18,7 +18,7 @@ function App() {
         });
     }, []);
 
-    const handleUpdateTask = (updatedTask: TaskData) => {
+    const handleUpdateTasks = (updatedTask: TaskData) => {
         setTasks((prevList) => {
             const taskExists = prevList.some(
                 (task) => task.id === updatedTask.id
@@ -45,19 +45,13 @@ function App() {
     return (
         <>
             <NavbarComponent />
-            <FormComponent onUpdateTaskList={handleUpdateTask} />
+            <FormComponent onUpdateTaskList={handleUpdateTasks} />
             <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} />
 
             <NotificationComponent />
             <ModalConfirmDeleteComponent />
-            {/*
-            <ModalEditTaskComponent
-                show={true}
-                task={tasks[0]}
-                onClose={() => {}}
-                onUpdateTask={(task) => console.log(task)}
-            />
-             */}
+
+            <ModalEditTaskComponent onUpdateTaskList={handleUpdateTasks} />
         </>
     );
 }

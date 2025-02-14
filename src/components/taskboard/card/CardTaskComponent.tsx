@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card } from "react-bootstrap";
 import "./card.css";
 import { TaskData } from "../../../classes/TaskData";
-import { TaskService } from "../../../service/TaskService";
-import { NotificationService } from "../../../service/NotificationService";
-import ConfirmModalService from "../../../service/ConfirmModalService";
+import TaskService from "../../../services/TaskService";
+import NotificationService from "../../../services/NotificationService";
+import ConfirmModalService from "../../../services/ConfirmModalService";
+import EditModalService from "../../../services/EditModalService";
 
 function CardTaskComponent({
     task,
@@ -16,6 +17,10 @@ function CardTaskComponent({
 }) {
     const confirmDelete = () => {
         ConfirmModalService.show(task, deleteTask);
+    };
+
+    const openEditModal = () => {
+        EditModalService.show(task);
     };
 
     const deleteTask = () => {
@@ -44,7 +49,10 @@ function CardTaskComponent({
                     <Card.Title>{task.title}</Card.Title>
                     <Card.Text>{task.description}</Card.Text>
                     <div className="btn_container">
-                        <Button variant="success">
+                        <Button
+                            variant="success"
+                            onClick={() => openEditModal()}
+                        >
                             <FontAwesomeIcon icon={faPenToSquare} />
                         </Button>
                         <Button
