@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { TaskData } from "../../../classes/TaskData";
 import FormComponent from "../../form/FormComponent";
 
-function ModalEditTask({
+function ModalEditTaskComponent({
     show,
     task,
     onUpdateTaskList,
@@ -45,4 +45,4 @@ function ModalEditTask({
     );
 }
 
-export default ModalEditTask;
+export default ModalEditTaskComponent;

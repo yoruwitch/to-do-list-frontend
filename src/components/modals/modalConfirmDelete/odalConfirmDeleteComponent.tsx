@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import ConfirmModalService from "../../../service/ConfirmModalService";
 import { TaskData } from "../../../classes/TaskData";
 
-function ModalConfirmDelete() {
+function ModalConfirmDeleteComponent() {
     const [show, setShow] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
     const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
@@ -56,4 +56,4 @@ function ModalConfirmDelete() {
     );
 }
 
-export default ModalConfirmDelete;
+export default ModalConfirmDeleteComponent;

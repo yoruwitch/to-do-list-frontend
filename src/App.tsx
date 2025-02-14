@@ -6,8 +6,8 @@ import TaskBoardComponent from "./components/taskboard/TaskBoardComponent";
 import { useEffect, useState } from "react";
 import { TaskService } from "./service/TaskService";
 import NotificationComponent from "./components/notification/NotificationComponent";
-import ModalConfirmDelete from "./components/modals/modalConfirmDelete/modalConfirmDelete";
-// import ModalEditTask from "./components/modals/modalEditTask/modalEditTask";
+import ModalConfirmDeleteComponent from "./components/modals/modalConfirmDelete/odalConfirmDeleteComponent";
+// import ModalEditTaskComponent from "./components/modals/modalEditTask/ModalEditTaskComponent";
 
 function App() {
     const [tasks, setTasks] = useState<TaskData[]>([]);
@@ -49,9 +49,9 @@ function App() {
             <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} />
 
             <NotificationComponent />
-            <ModalConfirmDelete />
+            <ModalConfirmDeleteComponent />
             {/*
-            <ModalEditTask
+            <ModalEditTaskComponent
                 show={true}
                 task={tasks[0]}
                 onClose={() => {}}
