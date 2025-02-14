@@ -7,7 +7,7 @@ import { TaskData } from "../../../classes/TaskData";
 function ModalConfirmDelete() {
     const [show, setShow] = useState(false);
     const [taskTitle, setTaskTitle] = useState("");
-    const [onConfirm, setOnConfirm] = useState(() => () => {});
+    const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
 
     useEffect(() => {
         const handleModal = (task: TaskData, onConfirm: () => void) => {
@@ -17,6 +17,7 @@ function ModalConfirmDelete() {
         };
 
         ConfirmModalService.subscribe(handleModal);
+        // Anonimous function to clean up the component renderization, "sign out"
         return () => ConfirmModalService.unsubscribe(handleModal);
     }, []);
 
