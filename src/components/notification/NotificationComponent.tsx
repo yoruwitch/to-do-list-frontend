@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
-import { NotificationService } from "../../service/NotificationService";
+import NotificationService from "../../services/NotificationService";
 
 function NotificationComponent() {
     const [show, setShow] = useState(false);
@@ -27,7 +27,7 @@ function NotificationComponent() {
         <ToastContainer
             className="p-3 position-fixed text-white"
             position="top-end"
-            style={{ zIndex: 1 }}
+            style={{ zIndex: 2000 }}
         >
             <Toast
                 onClose={() => setShow(false)}

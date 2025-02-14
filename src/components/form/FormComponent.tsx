@@ -4,9 +4,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import { faPencil } from "@fortawesome/free-solid-svg-icons/faPencil";
 import { TaskData } from "../../classes/TaskData";
-import { TaskService } from "../../service/TaskService";
-import { NotificationService } from "../../service/NotificationService";
+import TaskService from "../../services/TaskService";
+import NotificationService from "../../services/NotificationService";
 import SpinnerComponent from "../spinner/SpinnerComponent";
 
 function FormComponent({
@@ -20,9 +21,11 @@ function FormComponent({
     const [description, setDescription] = useState("");
     const [validated, setValidated] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
         if (formData) {
+            setIsEdit(true);
             setTitle(formData.title);
             setDescription(formData.description);
         }
@@ -53,7 +56,7 @@ function FormComponent({
                     setIsLoading(false);
                     onUpdateTaskList(task);
 
-                    // Configura a notificação de sucesso
+                    // Configures the success notification
                     NotificationService.show(
                         false,
                         "Success",
@@ -61,7 +64,7 @@ function FormComponent({
                     );
                 })
                 .catch((error) => {
-                    // Configura a notificação de erro
+                    // Configures the error notification
                     NotificationService.show(
                         true,
                         "Error",
@@ -74,9 +77,9 @@ function FormComponent({
                 formData.id,
                 new TaskData(formData.id, title, description)
             )
-                .then(({ res }) => {
+                .then((res) => {
                     const task = new TaskData(
-                        res.task.id,
+                        formData.id,
                         res.task.title,
                         res.task.description
                     );
@@ -106,7 +109,7 @@ function FormComponent({
             <section>
                 <div className="form_container">
                     <Form
-                        className="w-50"
+                        className="w-60"
                         noValidate
                         validated={validated}
                         onSubmit={handleSubmit}
@@ -162,8 +165,12 @@ function FormComponent({
                                     <SpinnerComponent />
                                 ) : (
                                     <>
-                                        <FontAwesomeIcon icon={faPlus} /> Add
-                                        new task
+                                        <FontAwesomeIcon
+                                            icon={isEdit ? faPencil : faPlus}
+                                        />
+                                        {isEdit
+                                            ? " Update task"
+                                            : " Add new task"}
                                     </>
                                 )}
                             </Button>
