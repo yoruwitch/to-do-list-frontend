@@ -15,9 +15,8 @@ section {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-height: 400px;
-    overflow-y: auto; 
+    max-height: 300px;
+    overflow-y: auto;
     scrollbar-color: var(--dark-purple) var(--light-purple);
     scrollbar-width: thin;
 }
-
