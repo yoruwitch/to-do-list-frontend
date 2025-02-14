@@ -44,18 +44,20 @@ function CardTaskComponent({
 
     return (
         <>
-            <Card style={{ width: "10rem" }} className="card_item">
+            <Card className="card_item">
                 <Card.Body>
                     <Card.Title>{task.title}</Card.Title>
                     <Card.Text>{task.description}</Card.Text>
                     <div className="btn_container">
                         <Button
+                            aria-label="Delete Task"
                             variant="success"
                             onClick={() => openEditModal()}
                         >
                             <FontAwesomeIcon icon={faPenToSquare} />
                         </Button>
                         <Button
+                        aria-label="Delete Task"
                             variant="danger"
                             onClick={() => confirmDelete()}
                         >
