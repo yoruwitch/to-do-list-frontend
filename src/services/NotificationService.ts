@@ -1,4 +1,4 @@
-export class NotificationService {
+class NotificationService {
     private static listeners: ((
         isError: boolean,
         title: string,
@@ -22,4 +22,4 @@ export class NotificationService {
     }
 }
 
-// export NotificationService;
+export default NotificationService;

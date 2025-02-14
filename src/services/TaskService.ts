@@ -1,6 +1,6 @@
 import { TaskData } from "../classes/TaskData";
 
-export class TaskService {
+class TaskService {
     static url = "http://localhost:3000/tasks";
     static async createTask(taskData: TaskData) {
         try {
@@ -31,7 +31,6 @@ export class TaskService {
         try {
             const res = await fetch(this.url);
             if (!res.ok) {
-
                 const errorData = await res.json();
 
                 throw new Error(errorData.message);
@@ -55,7 +54,6 @@ export class TaskService {
             });
 
             if (!res.ok) {
-
                 const errorData = await res.json();
 
                 throw new Error(errorData.message);
@@ -75,7 +73,6 @@ export class TaskService {
             });
 
             if (!res.ok) {
-
                 const errorData = await res.json();
 
                 throw new Error(errorData.message);
@@ -85,7 +82,8 @@ export class TaskService {
         } catch (error) {
             console.error(error);
             throw error;
-
         }
     }
 }
+
+export default TaskService;
