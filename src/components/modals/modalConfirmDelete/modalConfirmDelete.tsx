@@ -33,7 +33,7 @@ function ModalConfirmDelete() {
             <Modal.Body>
                 <p>
                     Are you sure you want to delete the task
-                    <strong> {taskTitle}</strong>?
+                    <strong> " {taskTitle}"</strong>?
                 </p>
             </Modal.Body>
 

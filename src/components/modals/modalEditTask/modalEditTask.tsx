@@ -7,12 +7,12 @@ import FormComponent from "../../form/FormComponent";
 function ModalEditTask({
     show,
     task,
-    onUpdateTask,
+    onUpdateTaskList,
     onClose,
 }: {
     show: boolean;
     task: TaskData;
-    onUpdateTask: (taskData: TaskData) => void;
+    onUpdateTaskList: (taskData: TaskData) => void;
     onClose: () => void;
 }) {
     return (
@@ -24,8 +24,8 @@ function ModalEditTask({
             <Modal.Body>
                 <FormComponent
                     formData={task}
-                    onUpdateTask={(taskData) => {
-                        onUpdateTask(taskData);
+                    onUpdateTaskList={(taskData) => {
+                        onUpdateTaskList(taskData);
                         onClose();
                     }}
                 />

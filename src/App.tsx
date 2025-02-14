@@ -45,7 +45,7 @@ function App() {
     return (
         <>
             <NavbarComponent />
-            <FormComponent onUpdateTask={handleUpdateTask} />
+            <FormComponent onUpdateTaskList={handleUpdateTask} />
             <TaskBoardComponent tasks={tasks} onDeleteTask={handleDeleteTask} />
 
             <NotificationComponent />
