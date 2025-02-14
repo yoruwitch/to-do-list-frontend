@@ -5,7 +5,7 @@ import "./card.css";
 import { TaskData } from "../../../classes/TaskData";
 import { TaskService } from "../../../service/TaskService";
 import { NotificationService } from "../../../service/NotificationService";
-import { ConfirmModalService } from "../../../service/ConfirmModalService";
+import ConfirmModalService from "../../../service/ConfirmModalService";
 
 function CardTaskComponent({
     task,
