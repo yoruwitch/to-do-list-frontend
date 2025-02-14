@@ -7,17 +7,19 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { TaskData } from "../../classes/TaskData";
 import { TaskService } from "../../service/TaskService";
 import { NotificationService } from "../../service/NotificationService";
+import SpinnerComponent from "../spinner/SpinnerComponent";
 
 function FormComponent({
     formData,
-    onUpdateTask,
+    onUpdateTaskList,
 }: {
     formData?: TaskData;
-    onUpdateTask: (task: TaskData) => void;
+    onUpdateTaskList: (task: TaskData) => void;
 }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [validated, setValidated] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (formData) {
@@ -32,12 +34,14 @@ function FormComponent({
         if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
+            setIsLoading(true);
             sendData();
         }
         setValidated(true);
     };
 
     const sendData = () => {
+        setIsLoading(true);
         if (!formData) {
             TaskService.createTask(new TaskData("", title, description))
                 .then((res) => {
@@ -46,7 +50,8 @@ function FormComponent({
                         res.title,
                         res.description
                     );
-                    onUpdateTask(task);
+                    setIsLoading(false);
+                    onUpdateTaskList(task);
 
                     // Configura a notificação de sucesso
                     NotificationService.show(
@@ -56,13 +61,13 @@ function FormComponent({
                     );
                 })
                 .catch((error) => {
-                    console.error(error);
                     // Configura a notificação de erro
                     NotificationService.show(
                         true,
                         "Error",
                         `Failed to create task. ${error}`
                     );
+                    setIsLoading(false);
                 });
         } else {
             TaskService.updateTask(
@@ -75,7 +80,9 @@ function FormComponent({
                         res.task.title,
                         res.task.description
                     );
-                    onUpdateTask(task);
+
+                    setIsLoading(false);
+                    onUpdateTaskList(task);
 
                     NotificationService.show(
                         false,
@@ -84,12 +91,12 @@ function FormComponent({
                     );
                 })
                 .catch((error) => {
-                    console.error(error);
                     NotificationService.show(
                         true,
                         "Error",
                         `Failed to update task. ${error}`
                     );
+                    setIsLoading(false);
                 });
         }
     };
@@ -146,8 +153,19 @@ function FormComponent({
                         </Form.Group>
 
                         <div className="btn_container">
-                            <Button className="btn_add" type="submit">
-                                <FontAwesomeIcon icon={faPlus} /> Add new task
+                            <Button
+                                className="btn_add"
+                                type="submit"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <SpinnerComponent />
+                                ) : (
+                                    <>
+                                        <FontAwesomeIcon icon={faPlus} /> Add
+                                        new task
+                                    </>
+                                )}
                             </Button>
                         </div>
                     </Form>
