@@ -1,0 +1,11 @@
+#image_404 {
+  width: 30%;
+  padding: 0.8em;
+}
+.empty_taskboard {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: var(--light-white);
+  
+}
